@@ -20,10 +20,7 @@
   <build>
     <resources>
       <resource>
-        <directory>src/main/resources</directory>
-        <excludes>
-          <!--<exclude>lib-js/test.js</exclude>-->
-        </excludes>
+        <directory>${project.build.directory}/generated-sources/js/</directory>
       </resource>
     </resources>
 
@@ -36,6 +33,42 @@
           <source>1.8</source>
           <target>1.8</target>
         </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+
+        <executions>
+          <execution>
+            <id>yarn install (initialize)</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>initialize</phase>
+            <configuration>
+              <executable>yarn</executable>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>yarn build (compile)</id>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <phase>compile</phase>
+            <configuration>
+              <executable>yarn</executable>
+              <arguments>
+                <argument>build</argument>
+              </arguments>
+              <environmentVariables>
+                <SOURCE_DIR>src/main/js</SOURCE_DIR>
+              </environmentVariables>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

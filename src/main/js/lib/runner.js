@@ -1,9 +1,12 @@
-function runner(module, output){
+var loadModule = require('./loadModule');
+
+function runner(program){
+  var module = loadModule(program);
   var state = module.emptyState;
   var init = module.init(state);
   var execute = module.execute(init.state, init.ids);
   for(var i = 0 ; i < execute.result.length ; i++){
-    output(execute.result[i]);
+    console.log(execute.result[i].value);
   }
 }
 module.exports = runner;

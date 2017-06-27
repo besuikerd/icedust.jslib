@@ -59,7 +59,7 @@ function makeReducer(actions, debug, optionalActions){
       console.warn('no message type is given')
     }
     if(state == undefined){
-      throw new Error('state became empty after action ', message.type);
+      // throw new Error('state became empty after action ' + message.type);
     }
     return state;
   }
@@ -135,16 +135,30 @@ function memoizeComponent(component, calculations, mergeActions){
 }
 module.exports.memoizeComponent = memoizeComponent;
 
-function pixiedustRunner(module){
-  var reducer = makeReducer(module.actions, true);
-  var store = makeStore(reducer, module.emptyState);
-  store.dispatch(module.actionCreators.init());
-  var App = React.createElement(Provider, {
-    store: store
-  },
-    React.createElement(module.Application)
-  );
-  var output = ReactDOM.renderToStaticMarkup(App);
-  return output;
-}
-module.exports.pixiedustRunner = pixiedustRunner;
+// function pixiedustRunner(module){
+//   var reducer = makeReducer(module.actions, true);
+//   var store = makeStore(reducer, module.emptyState);
+//   store.dispatch(module.actionCreators.init());
+//   var App = React.createElement(Provider, {
+//     store: store
+//   },
+//     React.createElement(module.Application)
+//   );
+//
+//
+//
+//   var previous = null;
+//   var pass = null;
+//   for(var i = 1; ; i++){
+//     console.log('render pass #' + i);
+//     pass = ReactDOM.renderToStaticMarkup(App);
+//     if(pass === previous){
+//       break;
+//     }
+//     previous = pass;
+//   }
+//   return pass;
+// }
+// module.exports.pixiedustRunner = pixiedustRunner;
+
+module.exports.runner = require('./runner');
