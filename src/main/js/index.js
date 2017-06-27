@@ -8,15 +8,15 @@ function generateUniqueId(){ //simple number generator
 
 var _ = require('lodash');
 var React = require('react');
-var ReactDOM = require('react-dom/server');
+var ReactDOM = require('react-dom');
+var ReactDOMServer = require('react-dom/server');
 var immutable = require('immutable');
 var moment = require('moment');
 
-var PixieDust = require('./lib/pixiedust/runtime');
-var Expression = require('./lib/expression');
-var runner = require('./lib/runner');
-var loadModule = require('./lib/loadModule');
-
+var PixieDust = require('./lib/pixiedust/index').default;
+var Expression = require('./lib/expression').default;
+var runner = require('./lib/runner').default;
+var loadModule = require('./lib/loadModule').default;
 
 module.exports = {
   EMPTY_ARRAY: EMPTY_ARRAY,
@@ -27,6 +27,7 @@ module.exports = {
   _: _,
   React: React,
   ReactDOM: ReactDOM,
+
   immutable: immutable,
   moment: moment,
 

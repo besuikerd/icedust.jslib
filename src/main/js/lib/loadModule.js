@@ -5,4 +5,4 @@ function loadModule(program){
   program(scope, Runtime);
   return scope.exports;
 }
-module.exports = loadModule;
+export default loadModule;

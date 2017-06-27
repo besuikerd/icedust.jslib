@@ -23,6 +23,17 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env', 'react']
+          }
+        }
+      },
+
+      {
         test: require.resolve(path.join(__dirname, SOURCE_DIR, 'index')),
         use: {
           loader: 'expose-loader',

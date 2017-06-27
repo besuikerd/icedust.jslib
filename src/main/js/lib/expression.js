@@ -59,7 +59,7 @@ function disj(collection){
   return collection.isEmpty();
 }
 
-module.exports = {
+export default {
   sum: sum,
   min: min,
   max: max,

@@ -1,36 +1,29 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
-var _ = require('lodash');
+import React, { Component } from 'react';
+import _ from 'lodash';
 
-var ResultEntry = createReactClass({
-  render : function(){
-    var result = this.props.result;
-    var expression = result.expression;
-    var value = result.value;
+class ResultEntry extends Component{
+  render(){
+    let result = this.props.result;
+    let expression = result.expression;
+    let value = result.value;
 
-    var valueElementType = result.type === 'View' ? 'div' : 'pre';
+    let valueElementType = result.type === 'View' ? 'div' : 'pre';
 
     if(_.isArray(value)){
-      var mapped = [];
+      let mapped = [];
 
 
       value = value.map(function(e, i) {
-        console.log(i)
         return React.createElement('div', {key: i}, e);
       });
     }
 
-    var title = result.expression + " :: " + result.type + result.multiplicity;
-    return React.createElement('div', {},
-      React.createElement('h3', {},
-        React.createElement('pre', {},
-          title
-        )
-      ),
-      React.createElement(valueElementType, {style: {whiteSpace: 'pre-wrap', wordWrap: 'break-word'}}, value)
-    );
+    let title = result.expression + " :: " + result.type + result.multiplicity;
+    return <div>
+      <h3><pre> { title } </pre></h3>
+      {React.createElement(valueElementType, {style: {whiteSpace: 'pre-wrap', wordWrap: 'break-word'}}, value)}
+    </div>;
   }
-});
+}
 
-
-module.exports = ResultEntry;
+export default ResultEntry;

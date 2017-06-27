@@ -1,23 +1,14 @@
-var React = require('react');
-var createReactClass = require('create-react-class');
+import React, { Component } from 'react';
+import ResultEntry from './ResultEntry';
 
-var ResultEntry = require('./ResultEntry');
-
-var Result = createReactClass({
-  render : function(){
-    var result = this.props.result;
-
-    var entries = [];
-    for(var i = 0 ; i < result.length ; i++){
-      entries.push(React.createElement(ResultEntry, {
-        key: i,
-        result: result[i]
-      }));
-    }
-    return React.createElement('div', {},
-      entries
-    );
+class Result extends Component{
+  render(){
+    let result = this.props.result;
+    let entries = result.map((r, i) => <ResultEntry key={i} result={r}/>);
+    return <div>
+      { entries }
+    </div>;
   }
-});
+}
 
-module.exports = Result;
+export default Result;

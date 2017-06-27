@@ -1,22 +1,31 @@
-var loadModule = require('../loadModule');
-var _ = require('lodash');
-var React = require('react');
-var ReactDOM = require('react-dom');
+import loadModule from '../loadModule';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var Result = require('./components/Result');
+import Result from './components/Result';
+
+import PixieDustProvider from './components/PixieDustProvider';
+import PixieDustComponent from './components/PixieDustComponent';
+
+import runtime from './runtime';
 
 function runner(program, container){
-  var module = loadModule(program);
-  var state = module.emptyState;
-  var init = module.init(state);
-  var execute = module.execute(init.state, init.ids);
+  let module = loadModule(program);
+  let state = module.emptyState;
+  let init = module.init(state);
+  let store = runtime.makeStore(module.reducer, init.state);
+  let execute = module.execute(store, init.ids);
+  let element = <PixieDustProvider store={store}>
+    <Result result={execute}/>
+  </PixieDustProvider>;
 
-  var element = React.createElement(Result, {
-    result : execute.result
-  });
+  setTimeout(function(){
+    store.dispatch({type: 'setFile_content', id: 'f1', value: 'bla'})
+  }, 1000)
   ReactDOM.render(element, container);
-  console.log('result', execute.result);
-  console.log('state', execute.state.toJS());
+  console.log('result', execute);
+  console.log('state', store.getState().toJS());
+
 }
 
 module.exports = runner;
